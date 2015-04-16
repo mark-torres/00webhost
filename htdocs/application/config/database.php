@@ -48,10 +48,26 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'localhost';
-$db['default']['username'] = '';
-$db['default']['password'] = '';
-$db['default']['database'] = '';
+$db_user = "johnny";
+$db_pass = "9zFH22ZU684n2x6T";
+$db_name = "sandbox1";
+$db_host = "localhost";
+
+$web_host = $_SERVER['HTTP_HOST'];
+
+switch($web_host)
+{
+	case 'markushi.net78.net':
+		$db_host = "mysql2.000webhost.com";
+		$db_user = "a6718338_usr1";
+		$db_name = "a6718338_db1";
+		break;
+}
+
+$db['default']['hostname'] = $db_host;
+$db['default']['username'] = $db_user;
+$db['default']['password'] = $db_pass;
+$db['default']['database'] = $db_name;
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;

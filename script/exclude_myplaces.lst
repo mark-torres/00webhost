@@ -1,0 +1,5 @@
+application/config/database.php
+img/photos
+user_guide
+license.txt
+.DS_Store
