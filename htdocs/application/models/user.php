@@ -14,29 +14,31 @@ class User extends CI_Model {
 	public function loginUser($user, $pass)
 	{
 		$user_data = false;
-		// get places
 		$this->db->select('id, username, password');
 		$query = $this->db->get_where($this->table_name, array('username' => $user), 1);
 		if ($query->num_rows() > 0)
 		{
 			$row_data = $query->result_array();
 			$row_data = array_pop($row_data);
-			if(function_exists('password_verify'))
-			{
-				if(password_verify ($pass, $row_data['password']))
-				{
-					unset($row_data['password']);
-					$user_data = $row_data;
-				}
+			if ($pass == $row_data['password']) {
+				$user_data = $row_data;
 			}
-			else
-			{
-				if($row_data['password'] === crypt($pass, $row_data['password']))
-				{
-					unset($row_data['password']);
-					$user_data = $row_data;
-				}
-			}
+			// if(function_exists('password_verify'))
+			// {
+			// 	if(password_verify ($pass, $row_data['password']))
+			// 	{
+			// 		unset($row_data['password']);
+			// 		$user_data = $row_data;
+			// 	}
+			// }
+			// else
+			// {
+			// 	if($row_data['password'] === crypt($pass, $row_data['password']))
+			// 	{
+			// 		unset($row_data['password']);
+			// 		$user_data = $row_data;
+			// 	}
+			// }
 		}
 		return $user_data;
 	} // - - end of loginUser - - - - -

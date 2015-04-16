@@ -1,4 +1,5 @@
 <form onsubmit="return false;" id="frm_login">
+	<input type="hidden" name="login_salt" value="<?php echo $salt ?>">
 	<table>
 		<tr>
 			<th colspan="2">
@@ -18,7 +19,8 @@
 				Password:
 			</td>
 			<td>
-				<input size="30" type="password" name="pass" value="" id="login_pass">
+				<input size="30" type="password" value="" id="pass">
+				<input type="hidden" name="pass" value="" id="login_pass">
 			</td>
 		</tr>
 		<tr>
@@ -34,6 +36,7 @@
 		<a href="#close" class="icon-remove"></a>
 	</div>
 </form>
+<script src="/js/sha256.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
 	jQuery('#login_user').focus();
 	
@@ -56,10 +59,18 @@
 			jQuery('#login_notice').fadeIn();
 		}
 	}
+	
+	function validateForm() {
+		var pass = document.getElementById('login_pass');
+		var pswd = document.getElementById('pass');
+		pass.value = CryptoJS.SHA256(pswd.value).toString(CryptoJS.enc.Hex);
+		return true;
+	}
  
 	jQuery("#frm_login").ajaxFormSubmit({
 		action: "/users/ajax_login",
-		callback: checkLogin
+		callback: checkLogin,
+		validation: validateForm
 	});
 </script>
 

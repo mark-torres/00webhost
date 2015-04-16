@@ -22,7 +22,6 @@ class Users extends CI_Controller {
 	
 	public function ajax_login()
 	{
-		if(empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != "on")
 		if(!empty($_POST))
 		{
 			header('Content-Type: application/json;charset=UTF-8');
@@ -33,7 +32,12 @@ class Users extends CI_Controller {
 			$this->load->model('User', 'users_db');
 			$user = $this->input->post('user');
 			$pass = $this->input->post('pass');
-			$login = $this->users_db->loginUser($user, $pass);
+			$salt = $this->input->post('login_salt');
+			if ($salt != $this->session->userdata('login_salt')) {
+				$login = false;
+			} else {
+				$login = $this->users_db->loginUser($user, $pass);
+			}
 			if(empty($login))
 			{
 				$response['message'] = "Wrong credentials";
@@ -45,15 +49,18 @@ class Users extends CI_Controller {
 				//
 				$response['success'] = true;
 				$response['message'] = "OK";
-				$response['data'] = $login;
+				// $response['data'] = $login;
+				$this->session->unset_userdata('login_salt');
 			}
 			echo json_encode($response);
 		}
 		else
 		{
+			$salt = crypt("-".mt_rand()."-", base64_encode(microtime()));
+			$this->session->set_userdata('login_salt', $salt);
 			//
 			$data = array();
-			$content = array();
+			$content = array('salt' => $salt);
 			//
 			$this->load->view('user/_login_form',$content);
 		}

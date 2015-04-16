@@ -19,9 +19,13 @@ jQuery.fn.ajaxFormSubmit = function (options) {
 
 	// bind submit event
 	jQuery(this).submit(function (event) {
+		event.preventDefault();
+		if(typeof options.validation == 'function')
+		{
+			if(!options.validation())
+				return false;
+		}
 		var formData = jQuery(this).serialize();
 		jQuery.post(options.action, formData, options.callback, "json");
-		event.preventDefault();
 	});
 }
-
