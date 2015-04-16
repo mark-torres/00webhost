@@ -34,11 +34,13 @@ if (defined('ENVIRONMENT'))
 	{
 		case 'development':
 			error_reporting(E_ALL);
+			ini_set('display_errors', 'On');
 		break;
 	
 		case 'testing':
 		case 'production':
-			error_reporting(0);
+			error_reporting(E_ALL & ~E_NOTICE);
+			ini_set('display_errors', 'Off');
 		break;
 
 		default:
@@ -151,7 +153,8 @@ if (defined('ENVIRONMENT'))
 	// Is the system path correct?
 	if ( ! is_dir($system_path))
 	{
-		exit("Your system folder path does not appear to be set correctly. Please open the following file and correct this: ".pathinfo(__FILE__, PATHINFO_BASENAME));
+		exit("Your system folder path does not appear to be set correctly. ".
+			"Please open the following file and correct this: ".pathinfo(__FILE__, PATHINFO_BASENAME));
 	}
 
 /*
@@ -185,7 +188,8 @@ if (defined('ENVIRONMENT'))
 	{
 		if ( ! is_dir(BASEPATH.$application_folder.'/'))
 		{
-			exit("Your application folder path does not appear to be set correctly. Please open the following file and correct this: ".SELF);
+			exit("Your application folder path does not appear to be set correctly. ".
+				"Please open the following file and correct this: ".SELF);
 		}
 
 		define('APPPATH', BASEPATH.$application_folder.'/');

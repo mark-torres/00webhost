@@ -36,6 +36,15 @@ define('FOPEN_READ_WRITE_CREATE',				'a+b');
 define('FOPEN_WRITE_CREATE_STRICT',				'xb');
 define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 
+/*
+
+*/
+define('PREVIEW_TEXT_LEN', 80);
+define('PHOTO_WIDTH', 600);
+define('PHOTO_HEIGHT', 600);
+define('PHOTO_THUMB_WIDTH', 200);
+define('PHOTO_THUMB_HEIGHT', 200);
+define('PHOTO_MAX_FILESIZE', 512000); // 500 KB
 
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */

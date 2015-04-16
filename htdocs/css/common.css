@@ -1,0 +1,20 @@
+body,th,td,input,option,textarea{
+	font-family: 'Raleway', sans-serif;
+}
+
+#user_links{
+	text-align: right;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+label.inline{
+	white-space: nowrap;
+}
+
+p.tags{
+	line-height: 35px;
+}
+

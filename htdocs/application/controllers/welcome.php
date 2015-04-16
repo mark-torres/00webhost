@@ -1,25 +1,43 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Welcome extends CI_Controller {
+	
+	private $user;
 
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -  
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in 
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see http://codeigniter.com/user_guide/general/urls.html
-	 */
+	public function __construct()
+	{
+		parent::__construct();
+		// Check session
+		$this->user = false;
+		$user = $this->session->userdata('user_id');
+		if(!empty($user))
+		{
+			$this->user = array(
+				'id'   => $this->session->userdata('user_id'),
+				'name' => $this->session->userdata('user_name'),
+			);
+		}
+	}
+
 	public function index()
 	{
-		$this->load->view('welcome_message');
+		// load tags
+		$this->load->model('Tag', 'tags_db');
+		$tags = $this->tags_db->getAll();
+		// load places
+		$this->load->model('Place', 'places_db');
+		$places = $this->places_db->getPopular(9);
+		// data for content view
+		$content = array();
+		$content['tags'] = $tags;
+		$content['popular'] = $places;
+		//
+		$data = array();
+		$data['page_title'] = "Welcome!";
+		$data['user'] = $this->user;
+		$data['page_content'] = $this->load->view('welcome',$content,true);
+		//
+		$this->load->view('common/main', $data);
 	}
 }
 
