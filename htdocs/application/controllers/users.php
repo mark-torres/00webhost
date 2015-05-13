@@ -49,7 +49,7 @@ class Users extends CI_Controller {
 				//
 				$response['success'] = true;
 				$response['message'] = "OK";
-				// $response['data'] = $login;
+				$response['data'] = array('username' => $login['username']);
 				$this->session->unset_userdata('login_salt');
 			}
 			echo json_encode($response);
