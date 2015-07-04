@@ -62,7 +62,7 @@ class Users extends CI_Controller {
 			$data = array();
 			$content = array('salt' => $salt);
 			//
-			$this->load->view('user/_login_form',$content);
+			$this->load->view('user/_login_form-material',$content);
 		}
 	} // - - end of login - - - - -
 	

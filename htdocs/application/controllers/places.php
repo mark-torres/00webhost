@@ -34,11 +34,11 @@ class Places extends CI_Controller {
 		$content['popular'] = $places;
 		//
 		$data = array();
-		$data['page_title'] = "Welcome!";
+		$data['page_title'] = "Find your favorite place";
 		$data['user'] = $this->user;
-		$data['page_content'] = $this->load->view('place/list',$content,true);
+		$data['page_content'] = $this->load->view('place/list-material',$content,true);
 		//
-		$this->load->view('common/main', $data);
+		$this->load->view('common/main-material', $data);
 	}
 	
 	public function search()
@@ -104,11 +104,13 @@ class Places extends CI_Controller {
 		$content['title'] = $title;
 		$content['places'] = $places;
 		$content['params'] = $params;
+		//
+		$data['page_scripts'] = array('/js/places-list.js');
 		$data['page_title'] = $title;
 		$data['user'] = $this->user;
-		$data['page_content'] = $this->load->view('place/list',$content,true);
+		$data['page_content'] = $this->load->view('place/list-material',$content,true);
 		//
-		$this->load->view('common/main', $data);
+		$this->load->view('common/main-material', $data);
 	} // - - end of by_tag - - - - -
 	
 	public function details()
@@ -133,9 +135,9 @@ class Places extends CI_Controller {
 		$content['user'] = $this->user;
 		$data['page_title'] = $title;
 		$data['user'] = $this->user;
-		$data['page_content'] = $this->load->view('place/details',$content,true);
+		$data['page_content'] = $this->load->view('place/details-material',$content,true);
 		//
-		$this->load->view('common/main', $data);
+		$this->load->view('common/main-material', $data);
 	} // - - end of details - - - - -
 	
 	public function add()
@@ -153,9 +155,9 @@ class Places extends CI_Controller {
 		$content['title'] = $title;
 		$data['page_title'] = $title;
 		$data['user'] = $this->user;
-		$data['page_content'] = $this->load->view('place/form',$content,true);
+		$data['page_content'] = $this->load->view('place/form-material',$content,true);
 		//
-		$this->load->view('common/main', $data);
+		$this->load->view('common/main-material', $data);
 	} // - - end of add - - - - -
 	
 	public function edit()
@@ -178,9 +180,9 @@ class Places extends CI_Controller {
 		$content['title'] = $title;
 		$data['page_title'] = $title;
 		$data['user'] = $this->user;
-		$data['page_content'] = $this->load->view('place/form',$content,true);
+		$data['page_content'] = $this->load->view('place/form-material',$content,true);
 		//
-		$this->load->view('common/main', $data);
+		$this->load->view('common/main-material', $data);
 	} // - - end of edit - - - - -
 	
 	public function save()

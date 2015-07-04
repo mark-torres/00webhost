@@ -26,7 +26,7 @@ class Welcome extends CI_Controller {
 		$tags = $this->tags_db->getAll();
 		// load places
 		$this->load->model('Place', 'places_db');
-		$places = $this->places_db->getPopular(9);
+		$places = $this->places_db->getPopular(5);
 		// data for content view
 		$content = array();
 		$content['tags'] = $tags;
@@ -35,9 +35,9 @@ class Welcome extends CI_Controller {
 		$data = array();
 		$data['page_title'] = "Welcome!";
 		$data['user'] = $this->user;
-		$data['page_content'] = $this->load->view('welcome',$content,true);
+		$data['page_content'] = $this->load->view('welcome-material',$content,true);
 		//
-		$this->load->view('common/main', $data);
+		$this->load->view('common/main-material', $data);
 	}
 }
 
