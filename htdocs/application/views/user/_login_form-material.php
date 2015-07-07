@@ -1,15 +1,16 @@
 <div id="form-login-container" class="row" style="display: none;">
+	<h4>
+		Log in to My Places
+	</h4>
 	<form id="form-login" class="col s12" onsubmit="return false;">
 		<input name="login_salt" value="<?php echo $salt ?>" type="hidden">
 		<input id="login-password" name="pass" value="" type="hidden">
 		<div class="row">
-			<div class="input-field col s12">
+			<div class="input-field col s12 m6">
 				<input placeholder="Username" id="login-user" name="user" type="text">
 				<label for="login-user">Username</label>
 			</div>
-		</div>
-		<div class="row">
-			<div class="input-field col s12">
+			<div class="input-field col s12 m6">
 				<input placeholder="Password" id="login-pswd" type="password">
 				<label for="login-password">Password</label>
 			</div>

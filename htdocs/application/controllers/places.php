@@ -135,6 +135,14 @@ class Places extends CI_Controller {
 		$content['user'] = $this->user;
 		$data['page_title'] = $title;
 		$data['user'] = $this->user;
+		$data['page_scripts'] = array(
+			'/js/ol.js',
+			'/js/places-details.js',
+		);
+		if (!empty($this->user)) {
+			$data['page_scripts'][] = '/js/user.js';
+			$data['page_scripts'][] = '/js/photo_upload-material.js';
+		}
 		$data['page_content'] = $this->load->view('place/details-material',$content,true);
 		//
 		$this->load->view('common/main-material', $data);

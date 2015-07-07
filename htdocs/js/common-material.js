@@ -8,6 +8,11 @@ var formLoginModal = document.getElementById('modal-login');
 function loadLoginForm() {
 	jQuery('#modal-login-content').load('/users/ajax_login');
 }
+function matAlert(message) {
+	if(typeof message == 'undefined') message = "Fusce dapibus, tellus ac cursus commodo.";
+	jQuery('#modal-alert-text').html(message);
+	jQuery('#modal-alert').openModal();
+}
 // ================
 // = JQUERY STUFF =
 // ================

@@ -9,6 +9,11 @@
 	<link href="/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 	<link href="/css/common-material.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
+<script type="text/javascript">
+window.onerror = function(message, file, line) {
+  console.log(file + ':' + line + '\n\n' + message);
+};
+</script>
 <body>
 	<!-- LOGIN MODAL -->
 	<div id="modal-login" class="modal">
@@ -20,6 +25,17 @@
 		<div is="modal-login-footer" class="modal-footer">
 			<a href="#!" onclick="return false;" class="modal-action modal-close btn-flat">Cancel</a>
 			<a href="#!" onclick="return false;" class="modal-action btn-flat" id="form-login-submit" style="visibility: hidden;">Login</a>
+		</div>
+	</div>
+	<!-- ALERT MODAL -->
+	<div id="modal-alert" class="modal">
+		<div class="modal-content">
+			<p id="modal-alert-text">
+				A bunch of text
+			</p>
+		</div>
+		<div class="modal-footer">
+			<a href="#!" onclick="return false;" class="modal-action modal-close btn-flat">Agree</a>
 		</div>
 	</div>
 	<!-- CONTENT -->
