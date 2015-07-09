@@ -80,12 +80,12 @@ foreach ($popular as $key => $place)
 							$last_tag = array_pop($tags);
 							?>
 							<?php foreach ($tags as $tag): ?>
-								<a href="/places/search/type/tag/keyword/<?php echo $tag['name'] ?>">
+								<a href="<?php echo site_url("/places/search/type/tag/keyword/{$tag['name']}") ?>">
 									<?php echo $tag['display_name'] ?>
 								</a>, 
 							<?php endforeach ?>
 						
-								<a href="/places/search/type/tag/keyword/<?php echo $last_tag['name'] ?>">
+								<a href="<?php echo site_url("/places/search/type/tag/keyword/{$last_tag['name']}") ?>">
 									<?php echo $last_tag['display_name'] ?>
 								</a>
 						</p>

@@ -5,8 +5,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
 	<title>My places<?php echo empty($page_title)?'':" :: ".$page_title ?></title>
 	<!-- CSS	-->
-	<link href="/css/material-icons.css" rel="stylesheet"/>
-	<link href="/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+	<link href="/libs/materialize/css/material-icons.css" type="text/css" rel="stylesheet" media="all"/>
+	<link href="/libs/materialize/css/materialize.min.css" type="text/css" rel="stylesheet" media="all"/>
 	<link href="/css/common-material.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
 <script type="text/javascript">
@@ -113,22 +113,8 @@ window.onerror = function(message, file, line) {
 				</div>
 				<!--
 				<div class="col l3 s12">
-					<h5 class="white-text">Settings</h5>
-					<ul>
-						<li><a class="white-text" href="#!">Link 1</a></li>
-						<li><a class="white-text" href="#!">Link 2</a></li>
-						<li><a class="white-text" href="#!">Link 3</a></li>
-						<li><a class="white-text" href="#!">Link 4</a></li>
-					</ul>
 				</div>
 				<div class="col l3 s12">
-					<h5 class="white-text">Connect</h5>
-					<ul>
-						<li><a class="white-text" href="#!">Link 1</a></li>
-						<li><a class="white-text" href="#!">Link 2</a></li>
-						<li><a class="white-text" href="#!">Link 3</a></li>
-						<li><a class="white-text" href="#!">Link 4</a></li>
-					</ul>
 				</div>
 				-->
 			</div>
@@ -142,7 +128,7 @@ window.onerror = function(message, file, line) {
 	</footer>
 	<!--	Scripts-->
 	<script src="/js/jquery_1.9.1.min.js"></script>
-	<script src="/js/materialize.min.js"></script>
+	<script src="/libs/materialize/js/materialize.min.js"></script>
 	<script src="/js/ajax.js"></script>
 	<script src="/js/common-material.js"></script>
 	<?php if (empty($user['name'])): ?>

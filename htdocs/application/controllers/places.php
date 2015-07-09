@@ -142,6 +142,7 @@ class Places extends CI_Controller {
 		if (!empty($this->user)) {
 			$data['page_scripts'][] = '/js/user.js';
 			$data['page_scripts'][] = '/js/photo_upload-material.js';
+			$data['page_scripts'][] = '/libs/lightbox/js/lightbox.min.js';
 		}
 		$data['page_content'] = $this->load->view('place/details-material',$content,true);
 		//
@@ -306,7 +307,7 @@ class Places extends CI_Controller {
 								$photo_data = array(
 									'user_id'     => $this->user['id'],
 									'place_id'    => $place_id,
-									'description' => $photo_descr,
+									'description' => htmlentities($photo_descr),
 									'filename'    => $new_name,
 								);
 								$this->photos_db->addPlacePhoto($photo_data);

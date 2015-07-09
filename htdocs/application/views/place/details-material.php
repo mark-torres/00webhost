@@ -2,6 +2,7 @@
 
 <?php if (!empty($place['latitude']) && !empty($place['longitude'])): ?>
 	<link rel="stylesheet" href="/css/ol.css" type="text/css">
+	<link rel="stylesheet" href="/libs/lightbox/css/lightbox.css" type="text/css">
 	<style type="text/css" media="screen">
 	.ol-map {
 		height: 400px;
@@ -16,7 +17,19 @@
 			<h4>Ooops!</h4>
 			<p>Especified place does not exist.</p>
 		</div>
-	<?php else: ?>		
+	<?php else: ?>
+		
+		<?php if (!preg_match("/^0[.]0+$/",$place['latitude']) && !preg_match("/^0[.]0+$/",$place['longitude'])): ?>
+			<div class="section">
+				<div class="row">
+					<div id="ol-map" class="ol-map"></div>
+					<a class="btn-flat" href="#" onclick="resetMapView(); return false;">
+						Reset map position
+					</a>
+				</div>
+			</div>
+		<?php endif ?>
+		
 		<div class="section">
 			<div class="row">
 				<div class="col s12 m8">
@@ -29,11 +42,11 @@
 					$last_tag = array_pop($place['tags']);
 					?>
 						<?php foreach ($place['tags'] as $tag): ?>
-							<a href="/places/search/type/tag/keyword/<?php echo $tag['name'] ?>">
+							<a href="<?php echo site_url("/places/search/type/tag/keyword/{$tag['name']}") ?>">
 								<?php echo $tag['display_name'] ?>
 							</a>,
 						<?php endforeach ?>
-							<a href="/places/search/type/tag/keyword/<?php echo $last_tag['name'] ?>">
+							<a href="<?php echo site_url("/places/search/type/tag/keyword/{$last_tag['name']}") ?>">
 								<?php echo $last_tag['display_name'] ?>
 							</a>
 					<?php endif ?>
@@ -76,16 +89,6 @@
 				</div>
 			</div>
 		</div>
-		<?php if (!preg_match("/^0[.]0+$/",$place['latitude']) && !preg_match("/^0[.]0+$/",$place['longitude'])): ?>
-			<div class="section">
-				<div class="row">
-					<div id="ol-map" class="ol-map"></div>
-					<a class="btn-flat" href="#" onclick="resetMapView(); return false;">
-						Reset map position
-					</a>
-				</div>
-			</div>
-		<?php endif ?>
 		
 		<div class="section">
 			<div class="row">
@@ -134,13 +137,18 @@
 					</div>
 				</div>
 			<?php endif ?>
-			<div class="row">
+			<div class="row" id="place_photo_gallery">
 				<?php if (!empty($place['photos']) && is_array($place['photos'])): ?>
 					<?php foreach ($place['photos'] as $photo_id => $photo): ?>
-						<div id="place_photo_gallery" class="col s12 m2">
-								<img class="responsive-img" src="<?php echo $photo['thumb'] ?>" 
+						<div class="col s6 m2">
+							<a href="<?php echo $photo['src'] ?>"
+								data-title="<?php echo htmlentities($photo['descr']) ?>"
+								data-lightbox="<?php echo "place-gallery-{$place['id']}" ?>">
+								<img class="circle responsive-img" 
+									src="<?php echo $photo['thumb'] ?>" 
 									height="<?php echo PHOTO_THUMB_HEIGHT ?>"
 									width="<?php echo PHOTO_THUMB_WIDTH ?>"/>
+							</a>
 						</div>
 					<?php endforeach ?>
 				<?php endif ?>

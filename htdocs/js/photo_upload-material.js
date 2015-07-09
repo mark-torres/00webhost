@@ -104,20 +104,16 @@ photoForm.onsubmit = function(event)
 			// File(s) uploaded.
 			var response = jQuery.parseJSON(xhr.response);
 			if(response.success) {
-				var div = jQuery('<div/>');
-				var caption = jQuery('<span/>');
-				caption.html(response.photo.description)
-				div.addClass('caption');
-				var photo = jQuery("<img/>");
-				photo.attr('src', response.photo.thumb_src);
-				photo.attr('height', thumbHeight).attr('width', thumbWidth);
-				var link = jQuery("<a/>");
-				link.attr('rel','gallery0');
-				link.attr('target', '_blank').attr('href', response.photo.src).addClass('place_gallery');
-				link.append(photo);
-				link.append(caption);
-				div.append(link);
-				jQuery('#place_photo_gallery').append(div);
+				var htmlCode = '<div class="col s6 m2 l2" id="place_photo_gallery">\n'+
+					'<a href="'+response.photo.src+'"\n'+
+					'data-title="'+response.photo.description+'"\n'+
+					'data-lightbox="place-gallery-'+response.photo.place_id+'">\n'+
+					'<img class="circle responsive-img"\n'+
+					'src="'+response.photo.thumb_src+'"\n'+
+					'height="'+thumbHeight+'" width="'+thumbWidth+'">\n'+
+					'</a>\n'+
+					'</div>';
+				jQuery('#place_photo_gallery').append(htmlCode);
 				photoForm.reset();
 			} else {
 				matAlert(response.message);

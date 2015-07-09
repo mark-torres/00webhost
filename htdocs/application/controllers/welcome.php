@@ -39,6 +39,30 @@ class Welcome extends CI_Controller {
 		//
 		$this->load->view('common/main-material', $data);
 	}
+	
+	public function env_info() {
+		if(!empty($this->user)) {
+			phpinfo();
+			die();
+		} else {
+			echo "<pre>";
+			$server = array();
+			$server['HTTP_HOST'] = $_SERVER['HTTP_HOST'];
+			$server['HTTP_USER_AGENT'] = $_SERVER['HTTP_USER_AGENT'];
+			$server['SERVER_NAME'] = $_SERVER['SERVER_NAME'];
+			$server['SERVER_ADDR'] = $_SERVER['SERVER_ADDR'];
+			$server['SERVER_PORT'] = $_SERVER['SERVER_PORT'];
+			$server['REMOTE_ADDR'] = $_SERVER['REMOTE_ADDR'];
+			$server['SERVER_PROTOCOL'] = $_SERVER['SERVER_PROTOCOL'];
+			$server['REQUEST_METHOD'] = $_SERVER['REQUEST_METHOD'];
+			$server['QUERY_STRING'] = $_SERVER['QUERY_STRING'];
+			$server['REQUEST_URI'] = $_SERVER['REQUEST_URI'];
+			$server['SCRIPT_NAME'] = $_SERVER['SCRIPT_NAME'];
+			$server['REQUEST_TIME'] = $_SERVER['REQUEST_TIME'];
+			print_r($server);
+			echo "</pre>";
+		}
+	}
 }
 
 /* End of file welcome.php */

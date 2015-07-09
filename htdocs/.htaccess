@@ -1,7 +1,7 @@
 <IfModule rewrite_module>
 RewriteBase /
 RewriteEngine on
-RewriteCond $1 !^(index\.php|img|font|js|css|user_guide|robots\.txt)
+RewriteCond $1 !^(index\.php|img|libs|js|css|robots\.txt)
 RewriteRule ^(.*)$ /index.php/$1 [L]
 </IfModule>
 <IfModule deflate_module>
