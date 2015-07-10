@@ -1,10 +1,12 @@
-var posMorelia = [-101.1922, 19.7030];
+var posMorelia = [ - 101.1922, 19.7030];
 
 // ====================
 // = OPEN LAYER STUFF =
 // ====================
 var markerAdded = false;
-var markerIcon = new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+var markerIcon = new ol.style.Icon(
+/** @type {olx.style.IconOptions} */
+({
 	anchor: [24, 47],
 	anchorXUnits: 'pixels',
 	anchorYUnits: 'pixels',
@@ -42,117 +44,99 @@ var map = new ol.Map({
 // ============
 // = MY STUFF =
 // ============
-function geolocationSupport()
-{
-	return (typeof navigator.geolocation != 'undefined' )
+function geolocationSupport() {
+	return (typeof navigator.geolocation != 'undefined')
 } // - - - - - - end of function geolocationSupport - - - - - -
-
-function setMapLocation(position)
-{
-	var currentPosition = ol.proj.transform([position.coords.longitude, position.coords.latitude], 'EPSG:4326', 'EPSG:3857');
+function setMapLocation(position) {
+	var currentPosition = ol.proj.transform(
+		[position.coords.longitude, position.coords.latitude], 'EPSG:4326', 'EPSG:3857'
+	);
 	mapView.setZoom(17);
 	mapView.setCenter(currentPosition);
 	markerPoint = new ol.geom.Point(currentPosition);
 	markerFeature.setGeometry(markerPoint);
-	if(!markerAdded)
-	{
+	if (!markerAdded) {
 		markerAdded = true;
 		map.addLayer(markerLayer);
 	}
 } // - - - - - - end of function setMapLocation - - - - - -
-
-function locateMe()
-{
-	if(geolocationSupport())
-	{
+function locateMe() {
+	if (geolocationSupport()) {
 		// jQuery('#map').html('Loading map, please wait...');
 		navigator.geolocation.getCurrentPosition(setMapLocation);
-	}
-	else
-	{
+	} else {
 		alert("This browser does not support geolocation");
 	}
 } // - - - - - - end of function startMap - - - - - -
-
-function getMarkerLocation()
-{
+function getMarkerLocation() {
 	var g = markerFeature.getGeometry();
 	var c = g.getCoordinates();
-	var p = ol.proj.transform(c,'EPSG:3857','EPSG:4326');
-	var l = {lon: p[0], lat: p[1]};
+	var p = ol.proj.transform(c, 'EPSG:3857', 'EPSG:4326');
+	var l = {
+		lon: p[0],
+		lat: p[1]
+	};
 	return l;
 } // - - - - - - end of function getMapLocation - - - - - -
-
-function setLocationFromMarker()
-{
-	var mPos = getMarkerLocation();
-	jQuery('#place_latitude').val(mPos.lat);
-	jQuery('#place_longitude').val(mPos.lon);
+function setLocationFromMarker() {
+	if (markerAdded) {
+		var mPos = getMarkerLocation();
+		jQuery('#place_latitude_label').addClass('active');
+		jQuery('#place_longitude_label').addClass('active');
+		jQuery('#place_latitude').val(mPos.lat);
+		jQuery('#place_longitude').val(mPos.lon);
+	}
 } // - - - - - - end of function setLocationFromMarker - - - - - -
-
-function getCurrentLocation()
-{
-	if(geolocationSupport())
-	{
+function getCurrentLocation() {
+	if (geolocationSupport()) {
+		jQuery('#place_latitude_label').addClass('active');
+		jQuery('#place_longitude_label').addClass('active');
 		jQuery('#place_latitude').val('Please wait...');
 		jQuery('#place_longitude').val('Please wait...');
 		navigator.geolocation.getCurrentPosition(setCurrentLocation);
-	}
-	else
-	{
+	} else {
 		alert("This browser does not support geolocation");
 	}
 } // - - - - - - end of function getCurrentLocation - - - - - -
-
-function setCurrentLocation(position)
-{
+function setCurrentLocation(position) {
 	jQuery('#place_latitude').val(position.coords.latitude);
 	jQuery('#place_longitude').val(position.coords.longitude);
 } // - - - - - - end of function setCurrentLocation - - - - - -
-
-function addToDeletionList(photoId)
-{
+function addToDeletionList(photoId) {
 	var photos = jQuery('#photos_to_delete').val();
+	jQuery('#form-place-photos-submit').show();
 	var list = [];
-	if(photos.length > 0)
-	{
+	if (photos.length > 0) {
 		list = photos.split(',');
 	}
 	var pos = list.indexOf(photoId);
-	if(pos < 0)
-	{
+	if (pos < 0) {
 		list.push(photoId);
 		list.sort();
 		jQuery('#photos_to_delete').val(list.join(','));
-		console.log(list);
 	}
 } // - - - - - - end of function addToDeletionList - - - - - -
-
-function removeFromDeletionList(photoId)
-{
+function removeFromDeletionList(photoId) {
 	var photos = jQuery('#photos_to_delete').val();
 	var list = [];
-	if(photos.length > 0)
-	{
+	if (photos.length > 0) {
 		list = photos.split(',');
 	}
 	var pos = list.indexOf(photoId);
-	if(pos >= 0)
-	{
+	if (pos >= 0) {
 		list.splice(pos, 1);
 		list.sort();
+		if (list.length == 0) {
+			jQuery('#form-place-photos-submit').hide();
+		}
 		jQuery('#photos_to_delete').val(list.join(','));
-		console.log(list);
 	}
 } // - - - - - - end of function removeFromDeletionList - - - - - -
-
-jQuery(document).ready(function () {
+jQuery(document).ready(function() {
 	// check if place has location
 	if (typeof placeLocation != 'undefined' && placeLocation) {
 		placeLocation = ol.proj.transform(
-			[placeLocation['longitude'],placeLocation['latitude']],
-			'EPSG:4326',
-			'EPSG:3857'
+			[placeLocation['longitude'], placeLocation['latitude']], 'EPSG:4326', 'EPSG:3857'
 		);
 		mapView.setZoom(15);
 		mapView.setCenter(placeLocation);
@@ -162,14 +146,12 @@ jQuery(document).ready(function () {
 		map.addLayer(markerLayer);
 	}
 	// delete photo switch
-	jQuery('input.check-del_photo').on('change', function () {
+	jQuery('input.check-del_photo').on('change',
+	function() {
 		var photoId = jQuery(this).val();
-		if(this.checked)
-		{
+		if (this.checked) {
 			addToDeletionList(photoId);
-		}
-		else
-		{
+		} else {
 			removeFromDeletionList(photoId);
 		}
 	});

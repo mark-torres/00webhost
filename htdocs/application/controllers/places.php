@@ -45,14 +45,15 @@ class Places extends CI_Controller {
 	{
 		if(!empty($_POST))
 		{
+			// transform POST to URL
 			$type = (string)$this->input->post('type');
 			$keyword = (string)$this->input->post('keyword');
+			$type = trim($type);
+			$keyword = trim($keyword);
 			$params = array(
 				'type'    => $type,
 				'keyword' => $keyword,
 			);
-			$type = trim($type);
-			$keyword = trim($keyword);
 			if(!empty($type) && !empty($keyword) && strlen($keyword) >= 5)
 			{
 				redirect("/places/search/".$this->uri->assoc_to_uri($params));
@@ -64,11 +65,15 @@ class Places extends CI_Controller {
 		}
 		else
 		{
+			// get params from URL
 			$type = "";
 			$keyword = "";
 			$params = $this->uri->uri_to_assoc(3);
 			if(!empty($params))
 			{
+				foreach ($params as $key => $value) {
+					$params[$key] = urldecode($value);
+				}
 				$type = $params['type'];
 				$keyword = $params['keyword'];
 			}
@@ -80,7 +85,7 @@ class Places extends CI_Controller {
 		}
 		else
 		{
-			$title = "Places by $type: $keyword";
+			$title = "Places by $type: &quot;{$keyword}&quot;";
 		}
 		$pag_base = site_url("/places/search/".$this->uri->assoc_to_uri($params));
 		// get places
@@ -165,6 +170,9 @@ class Places extends CI_Controller {
 		$data['page_title'] = $title;
 		$data['page_scripts'] = array(
 			'/js/ol.js',
+			'/js/ol-drag.js',
+			'/js/location.js',
+			'/js/places-form-material.js',
 		);
 		$data['user'] = $this->user;
 		$data['page_content'] = $this->load->view('place/form-material',$content,true);
@@ -214,7 +222,6 @@ class Places extends CI_Controller {
 		{
 			//
 			$place_data = $this->input->post('place');
-			$photos_to_delete = $this->input->post('photos_to_delete');
 			// parse tags
 			if(!empty($place_data['tags']))
 			{
@@ -225,19 +232,6 @@ class Places extends CI_Controller {
 			$this->load->model('Photo', 'photos_db');
 			// save place
 			$saved = $this->places_db->save($place_data, $this->user);
-			// delete photos (if required)
-			if(!empty($photos_to_delete))
-			{
-				$list = explode(",", $photos_to_delete);
-				// die(json_encode($list));
-				foreach($list as $photo_id)
-				{
-					if(preg_match("/^\d+$/", $photo_id))
-					{
-						$this->photos_db->delete($photo_id);
-					}
-				}
-			}
 			// end request
 			if(!empty($saved))
 			{
@@ -342,6 +336,34 @@ class Places extends CI_Controller {
 		}
 		echo json_encode($response);
 	} // - - end of add_photo - - - - -
+	
+	function delete_photos() {
+		// check user in session
+		if(empty($this->user))
+		{
+			redirect("/places/search");
+		}
+		else
+		{
+			//
+			$place_data = $this->input->post('place');
+			$this->load->model('Photo', 'photos_db');
+			if(!empty($place_data['photos_to_delete']))
+			{
+				$list = explode(",", $place_data['photos_to_delete']);
+				foreach($list as $photo_id)
+				{
+					if(preg_match("/^\d+$/", $photo_id))
+					{
+						$this->photos_db->delete($photo_id);
+					}
+				}
+			}
+			// end request
+			$place_id = $place_data['id'];
+			redirect("/places/details/$place_id");
+		}
+	}
 }
 
 /* End of file places.php */

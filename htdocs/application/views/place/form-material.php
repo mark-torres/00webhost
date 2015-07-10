@@ -35,7 +35,6 @@ $submit_text = empty($id)?'Add':'Save';
 			<form action="<?php echo site_url("/places/save") ?>" method="post">
 				<div class="col s12 m6">
 					<input type="hidden" name="place[id]" value="<?php echo $id ?>" id="place_id">
-					<input type="hidden" name="photos_to_delete" value="" id="photos_to_delete">
 					<div class="input-field col s12">
 						<label for="place_name">
 							Name *
@@ -54,45 +53,52 @@ $submit_text = empty($id)?'Add':'Save';
 						</label>
 						<textarea class="materialize-textarea" name="place[address]" id="place_address"><?php echo $address ?></textarea>
 					</div>
-					<fieldset>
-						<legend>Location</legend>
+					<fieldset class="input-field">
+						<legend class="grey-text">Location</legend>
 						<div class="input-field col s6">
-							<label>
+							<label for="place_latitude" id="place_latitude_label">
 								Latitude
 							</label>
 							<input type="text" readonly name="place[latitude]" value="<?php echo $latitude ?>" id="place_latitude">
 						</div>
 						<div class="input-field col s6">
-							<label>
+							<label for="place_longitude" id="place_longitude_label"> 
 								Longitude
 							</label>
 							<input type="text" readonly name="place[longitude]" value="<?php echo $longitude ?>" id="place_longitude">
 						</div>
-						<div class="col_6">
-							<input class="orange" onclick="getCurrentLocation();" type="button"
-								name="btn_current_location" value="Get current location" id="btn_current_location">
-						</div>
-						<div class="col_6">
-							<input onclick="setLocationFromMarker();" class="orange" type="button"
-								name="btn_map_location" value="Get marker location" id="btn_map_location">
+						<div class="input-field col s12 m6">
+							<button onclick="getCurrentLocation();" class="teal btn-floating white-text lighten-2" 
+								type="button" id="btn_locate_me">
+								<i class="material-icons left">my_location</i>
+							</button>
+							&nbsp;&nbsp;
+							<button onclick="setLocationFromMarker();" class="teal btn-floating white-text lighten-2" 
+								type="button" id="btn_locate_me">
+								<i class="material-icons left">location_on</i>
+							</button>
 						</div>
 					</fieldset>
 				</div>
 				<div class="col s12 m6">
-					<div id="map" class="map"></div>
+					<div id="map" class="input-field map"></div>
 					<p>
-						<input onclick="locateMe();" class="orange" type="button" name="btn_locate_me" value="Locate me!" id="btn_locate_me">
+						<button onclick="locateMe();" class="teal btn-flat white-text lighten-2" 
+							type="button" id="btn_locate_me">
+							<i class="material-icons left">my_location</i>
+							Locate me
+						</button>
 					</p>
 				</div>
 				<div class="col s12">
-					<fieldset>
-						<legend class="blue-text">Tags</legend>
+					<fieldset class="input-field">
+						<legend class="grey-text">Tags</legend>
 						<?php foreach ($tag_list as $i => $tag): ?>
 							<p class="col s6 m4 l2">
 								<input <?php echo array_key_exists($tag['id'], $tags)?'checked':'' ?> 
 									name="place[tags][<?php echo $tag['id'] ?>]" type="checkbox" 
 									id="<?php echo "tag_{$tag['id']}" ?>" />
-								<label title="<?php echo htmlentities($tag['display_name']) ?>" for="<?php echo "tag_{$tag['id']}" ?>" class="truncate">
+								<label title="<?php echo htmlentities($tag['display_name']) ?>" for="<?php echo "tag_{$tag['id']}" ?>">
 									<?php echo $tag['display_name'] ?>
 								</label>
 							</p>
@@ -109,20 +115,35 @@ $submit_text = empty($id)?'Add':'Save';
 	<!-- photos -->	
 	<?php if (!empty($place['photos'])): ?>
 	<div class="section">
-		<?php foreach ($place['photos'] as $photo_id => $photo): ?>
-			<div class="caption">
-				<img src="<?php echo $photo['thumb'] ?>" 
-					height="<?php echo PHOTO_THUMB_HEIGHT ?>"
-					width="<?php echo PHOTO_THUMB_WIDTH ?>"/>
-				<span>
-					<label for="<?php echo "photo_{$photo_id}" ?>">
-						<input class="check-del_photo" type="checkbox" name="<?php echo "photo_{$photo_id}" ?>"
-							value="<?php echo $photo_id ?>" id="<?php echo "photo_{$photo_id}" ?>">
-						Delete this photo
-					</label>
-				</span>
+		<h5>
+			Photos
+		</h5>
+		<form method="post" id="form-place-photos" action="<?php echo site_url("/places/delete_photos") ?>">
+			<input type="hidden" name="place[id]" value="<?php echo $id ?>" id="place_id">
+			<input type="hidden" name="place[photos_to_delete]" value="" id="photos_to_delete">
+			<div class="row">
+				<?php foreach ($place['photos'] as $photo_id => $photo): ?>
+					<div class="col s4 m2" style="position: relative;">
+						<img class="circle responsive-img" src="<?php echo $photo['thumb'] ?>" 
+							onclick="jQuery('<?php echo "#photo_chk_{$photo_id}" ?>').click();"
+							height="<?php echo PHOTO_THUMB_HEIGHT ?>"
+							width="<?php echo PHOTO_THUMB_WIDTH ?>"/>
+						<p style="position: absolute; top: 0px; left: 0px; margin-top: 0px;">
+							<input class="check-del_photo" type="checkbox" value="<?php echo $photo_id ?>"
+								id="<?php echo "photo_chk_{$photo_id}" ?>"/>
+							<label for="<?php echo "photo_chk_{$photo_id}" ?>">
+								&nbsp;
+							</label>
+						</p>
+					</div>
+				<?php endforeach ?>
 			</div>
-		<?php endforeach ?>
+			<div class="row">
+				<button id="form-place-photos-submit" type="submit" class="btn red lighten-2" style="display: none;">
+					Delete selected photos
+				</button>
+			</div>
+		</form>
 	</div>
 	<?php endif ?>
 </div>
