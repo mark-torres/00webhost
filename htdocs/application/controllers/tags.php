@@ -43,7 +43,8 @@ class Tags extends CI_Controller {
 		else
 		{
 			// Lazy add: /tags/save/Hardware%20Store/X
-			if(empty($tag_data = $this->input->post('tag')))
+			$tag_data = $this->input->post('tag');
+			if(empty($tag_data))
 			{
 				$tag_data = array();
 				$display_name = $this->uri->segment(3);
