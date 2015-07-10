@@ -5,9 +5,14 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
 	<title>My places<?php echo empty($page_title)?'':" :: ".$page_title ?></title>
 	<!-- CSS	-->
-	<link href="/libs/materialize/css/material-icons.css" type="text/css" rel="stylesheet" media="all"/>
-	<link href="/libs/materialize/css/materialize.min.css" type="text/css" rel="stylesheet" media="all"/>
-	<link href="/css/common-material.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+	<?php if (preg_match("/\.local$/", $_SERVER['HTTP_HOST'])): ?>
+		<link href="<?php echo site_url("/libs/materialize/css/material-icons.css") ?>" type="text/css" 
+			rel="stylesheet" media="all"/>
+	<?php else: ?>
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<?php endif ?>
+	<link href="<?php echo site_url("/libs/materialize/css/materialize.min.css") ?>" type="text/css" rel="stylesheet" media="all"/>
+	<link href="<?php echo site_url("/css/common-material.css") ?>" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
 <script type="text/javascript">
 window.onerror = function(message, file, line) {
@@ -127,16 +132,16 @@ window.onerror = function(message, file, line) {
 		</div>
 	</footer>
 	<!--	Scripts-->
-	<script src="/js/jquery_1.9.1.min.js"></script>
-	<script src="/libs/materialize/js/materialize.min.js"></script>
-	<script src="/js/ajax.js"></script>
-	<script src="/js/common-material.js"></script>
+	<script src="<?php echo site_url("/js/jquery_1.9.1.min.js") ?>"></script>
+	<script src="<?php echo site_url("/libs/materialize/js/materialize.min.js") ?>"></script>
+	<script src="<?php echo site_url("/js/ajax.js") ?>"></script>
+	<script src="<?php echo site_url("/js/common-material.js") ?>"></script>
 	<?php if (empty($user['name'])): ?>
-		<script src="/js/sha256.js"></script>
+		<script src="<?php echo site_url("/js/sha256.js") ?>"></script>
 	<?php endif ?>
 	<?php if (!empty($page_scripts) && is_array($page_scripts)): ?>
 		<?php foreach ($page_scripts as $page_script): ?>
-		<script src="<?php echo $page_script ?>"></script>
+		<script src="<?php echo site_url($page_script) ?>"></script>
 		<?php endforeach ?>
 	<?php endif ?>
 	</body>

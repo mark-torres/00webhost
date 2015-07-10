@@ -42,6 +42,11 @@ var map = new ol.Map({
 // ============
 // = MY STUFF =
 // ============
+function geolocationSupport()
+{
+	return (typeof navigator.geolocation != 'undefined' )
+} // - - - - - - end of function geolocationSupport - - - - - -
+
 function setMapLocation(position)
 {
 	var currentPosition = ol.proj.transform([position.coords.longitude, position.coords.latitude], 'EPSG:4326', 'EPSG:3857');
@@ -142,6 +147,20 @@ function removeFromDeletionList(photoId)
 } // - - - - - - end of function removeFromDeletionList - - - - - -
 
 jQuery(document).ready(function () {
+	// check if place has location
+	if (typeof placeLocation != 'undefined' && placeLocation) {
+		placeLocation = ol.proj.transform(
+			[placeLocation['longitude'],placeLocation['latitude']],
+			'EPSG:4326',
+			'EPSG:3857'
+		);
+		mapView.setZoom(15);
+		mapView.setCenter(placeLocation);
+		markerPoint = new ol.geom.Point(placeLocation);
+		markerFeature.setGeometry(markerPoint);
+		markerAdded = true;
+		map.addLayer(markerLayer);
+	}
 	// delete photo switch
 	jQuery('input.check-del_photo').on('change', function () {
 		var photoId = jQuery(this).val();

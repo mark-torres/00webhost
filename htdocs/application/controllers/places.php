@@ -138,11 +138,11 @@ class Places extends CI_Controller {
 		$data['page_scripts'] = array(
 			'/js/ol.js',
 			'/js/places-details.js',
+			'/libs/lightbox/js/lightbox.min.js',
 		);
 		if (!empty($this->user)) {
 			$data['page_scripts'][] = '/js/user.js';
 			$data['page_scripts'][] = '/js/photo_upload-material.js';
-			$data['page_scripts'][] = '/libs/lightbox/js/lightbox.min.js';
 		}
 		$data['page_content'] = $this->load->view('place/details-material',$content,true);
 		//
@@ -163,6 +163,9 @@ class Places extends CI_Controller {
 		$content['tag_list'] = $tags;
 		$content['title'] = $title;
 		$data['page_title'] = $title;
+		$data['page_scripts'] = array(
+			'/js/ol.js',
+		);
 		$data['user'] = $this->user;
 		$data['page_content'] = $this->load->view('place/form-material',$content,true);
 		//
@@ -188,6 +191,12 @@ class Places extends CI_Controller {
 		$content['tag_list'] = $tags;
 		$content['title'] = $title;
 		$data['page_title'] = $title;
+		$data['page_scripts'] = array(
+			'/js/ol.js',
+			'/js/ol-drag.js',
+			'/js/location.js',
+			'/js/places-form-material.js',
+		);
 		$data['user'] = $this->user;
 		$data['page_content'] = $this->load->view('place/form-material',$content,true);
 		//

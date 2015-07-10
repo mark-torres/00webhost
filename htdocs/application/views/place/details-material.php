@@ -1,8 +1,8 @@
 <?php if(!empty($debug)) {echo "<pre>";var_dump($debug);echo "</pre>";} ?>
 
 <?php if (!empty($place['latitude']) && !empty($place['longitude'])): ?>
-	<link rel="stylesheet" href="/css/ol.css" type="text/css">
-	<link rel="stylesheet" href="/libs/lightbox/css/lightbox.css" type="text/css">
+	<link rel="stylesheet" href="<?php echo site_url("/css/ol.css") ?>" type="text/css">
+	<link rel="stylesheet" href="<?php echo site_url("/libs/lightbox/css/lightbox.css") ?>" type="text/css">
 	<style type="text/css" media="screen">
 	.ol-map {
 		height: 400px;
