@@ -1,18 +1,20 @@
 // =============
 // = VARIABLES =
 // =============
-var formLoginModal = document.getElementById('modal-login');
+var reloadAfterModal = false;
+
 // =============
 // = FUNCTIONS =
 // =============
 function loadLoginForm() {
-	jQuery('#modal-login-content').load('/users/ajax_login');
+	jQuery('#modal-login-content').load(siteUrl('/users/ajax_login'));
 }
 function matAlert(message) {
 	if(typeof message == 'undefined') message = "Fusce dapibus, tellus ac cursus commodo.";
 	jQuery('#modal-alert-text').html(message);
 	jQuery('#modal-alert').openModal();
 }
+
 // ================
 // = JQUERY STUFF =
 // ================

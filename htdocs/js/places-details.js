@@ -50,6 +50,10 @@ function hideUploadPhotoForm() {
 	jQuery(progContainer).hide();
 }
 
+function viewPlaceProducts() {
+	jQuery('#modal-product-content').load(siteUrl('/places/ajax_product_list/'+placeId));
+}
+
 jQuery(document).ready(function() {
 	jQuery(btnAddPhoto).on('click',function () {
 		showUploadPhotoForm();
@@ -57,5 +61,17 @@ jQuery(document).ready(function() {
 	jQuery(frmUploadPhoto).on('reset',function () {
 		hideUploadPhotoForm();
 	});
+	jQuery('#lnk-products').leanModal({
+			dismissible: true,
+			opacity: .5,
+			ready: viewPlaceProducts,
+			complete: function () {
+				jQuery('#modal-product-loader').show();
+				jQuery('#modal-product-content').html('');
+				if (reloadAfterModal) {
+					location.reload();
+				}
+			}
+		});
 });
 

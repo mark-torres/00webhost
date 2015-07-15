@@ -23,6 +23,32 @@ class Tag extends CI_Model {
 		return $tags;
 	} // - - end of getAll - - - - -
 	
+	public function getTagsById($tag_ids) {
+		$tags = array();
+		if(!empty($tag_ids)) {
+			$this->db->select('id, name, display_name');
+			if (is_array($tag_ids)) {
+				$this->db->where_in("id", $tag_ids);
+			} else {
+				$this->db->where("id", $tag_ids);
+			}
+			$this->db->order_by('name');
+			$query = $this->db->get('tags');
+			if ($query->num_rows() > 0)
+			{
+				$place_tags = $query->result_array();
+				foreach($place_tags as $tag)
+				{
+					$tags[$tag['id']] = array(
+						'name' => $tag['name'],
+						'display_name' => $tag['display_name'],
+					);
+				}
+			}
+		}
+		return $tags;
+	}
+		
 	public function findByName($name)
 	{
 		$tag = false;

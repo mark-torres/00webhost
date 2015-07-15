@@ -11,7 +11,7 @@ var markerIcon = new ol.style.Icon(
 	anchorXUnits: 'pixels',
 	anchorYUnits: 'pixels',
 	opacity: 0.95,
-	src: '/img/48/Map-Marker-Marker-Outside-Azure-icon.png'
+	src: siteUrl('/img/48/Map-Marker-Marker-Outside-Azure-icon.png')
 }));
 var markerPosition = ol.proj.transform(posMorelia, 'EPSG:4326', 'EPSG:3857');
 var markerPoint = new ol.geom.Point(markerPosition);

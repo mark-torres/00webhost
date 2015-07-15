@@ -10,7 +10,16 @@
 	}
 	</style>
 <?php endif ?>
-
+<div id="modal-product" class="modal modal-fixed-footer">
+	<div id="modal-product-content" class="modal-content">
+	</div>
+	<div id="modal-product-loader" class="progress collapsible">
+		<div class="indeterminate"></div>
+	</div>
+	<div id="modal-product-footer" class="modal-footer">
+		<a href="#!" onclick="return false;" class="modal-action modal-close btn-flat">Close</a>
+	</div>
+</div>
 <div class="container">
 	<?php if (empty($place)): ?>
 		<div class="section">
@@ -68,15 +77,46 @@
 				<?php endif ?>
 			</div>
 			<div class="row">
-				<div class="col s12 m6">
+				<div class="col s12 m3">
 					<strong>Info:</strong>
 					<br>
 					<?php echo nl2br($place['info']) ?>
 				</div>
-				<div class="col s12 m4">
+				<div class="col s12 m3">
 					<strong>Address:</strong>
 					<br>
 					<?php echo nl2br($place['address']) ?>
+				</div>
+				<div class="col s12 m4">
+					<strong>Products / Menu:</strong>
+					<br>
+					<?php if (!empty($user)): ?>
+						<p>
+							<a id="lnk-products" data-target="modal-product" href="#modal-product" onclick="return false;">
+								Edit
+							</a>
+						</p>
+					<?php endif ?>
+					<?php if (!empty($place['products'])): ?>
+						<table>
+							<tr>
+								<th data-field="name">Item</th>
+								<th class="right-align" data-field="price">Price</th>
+							</tr>
+						<?php foreach ($place['products'] as $product): ?>
+							<tr>
+								<td>
+									<?php echo $product['name'] ?>&nbsp;
+								</td>
+								<td class="right-align">
+									$ <?php echo $product['price'] ?>&nbsp;
+								</td>
+							</tr>
+						<?php endforeach ?>
+						</table>
+					<?php else: ?>
+						Nothing to show
+					<?php endif ?>
 				</div>
 				<div class="col s12 m2">
 					<strong>Popularity:</strong>

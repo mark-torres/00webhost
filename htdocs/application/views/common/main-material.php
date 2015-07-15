@@ -13,34 +13,35 @@
 	<?php endif ?>
 	<link href="<?php echo site_url("/libs/materialize/css/materialize.min.css") ?>" type="text/css" rel="stylesheet" media="all"/>
 	<link href="<?php echo site_url("/css/common-material.css") ?>" type="text/css" rel="stylesheet" media="screen,projection"/>
+	<script type="text/javascript">
+	function siteUrl(siteUri) {
+		var siteMainUrl = <?php echo json_encode(trim(site_url("/"),"/")) ?>;
+		return siteMainUrl + siteUri;
+	}
+	</script>
 </head>
-<script type="text/javascript">
-window.onerror = function(message, file, line) {
-  console.log(file + ':' + line + '\n\n' + message);
-};
-</script>
 <body>
 	<!-- LOGIN MODAL -->
-	<div id="modal-login" class="modal">
+	<div id="modal-login" class="modal modal-fixed-footer">
 		<div id="modal-login-content" class="modal-content">
 		</div>
 		<div id="modal-login-loader" class="progress collapsible">
 			<div class="indeterminate"></div>
 		</div>
-		<div is="modal-login-footer" class="modal-footer">
+		<div id="modal-login-footer" class="modal-footer">
 			<a href="#!" onclick="return false;" class="modal-action modal-close btn-flat">Cancel</a>
 			<a href="#!" onclick="return false;" class="modal-action btn-flat" id="form-login-submit" style="visibility: hidden;">Login</a>
 		</div>
 	</div>
 	<!-- ALERT MODAL -->
-	<div id="modal-alert" class="modal">
+	<div id="modal-alert" class="modal modal-fixed-footer">
 		<div class="modal-content">
 			<p id="modal-alert-text">
 				A bunch of text
 			</p>
 		</div>
 		<div class="modal-footer">
-			<a href="#!" onclick="return false;" class="modal-action modal-close btn-flat">Agree</a>
+			<a href="#!" onclick="return false;" class="modal-action modal-close btn-flat">Close</a>
 		</div>
 	</div>
 	<!-- CONTENT -->

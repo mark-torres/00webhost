@@ -68,12 +68,12 @@ $submit_text = empty($id)?'Add':'Save';
 							<input type="text" readonly name="place[longitude]" value="<?php echo $longitude ?>" id="place_longitude">
 						</div>
 						<div class="input-field col s12 m6">
-							<button onclick="getCurrentLocation();" class="teal btn-floating white-text lighten-2" 
+							<button onclick="getCurrentLocation();" class="blue btn-floating white-text lighten-2" 
 								type="button" id="btn_locate_me">
 								<i class="material-icons left">my_location</i>
 							</button>
 							&nbsp;&nbsp;
-							<button onclick="setLocationFromMarker();" class="teal btn-floating white-text lighten-2" 
+							<button onclick="setLocationFromMarker();" class="blue btn-floating white-text lighten-2" 
 								type="button" id="btn_locate_me">
 								<i class="material-icons left">location_on</i>
 							</button>
@@ -83,7 +83,7 @@ $submit_text = empty($id)?'Add':'Save';
 				<div class="col s12 m6">
 					<div id="map" class="input-field map"></div>
 					<p>
-						<button onclick="locateMe();" class="teal btn-flat white-text lighten-2" 
+						<button onclick="locateMe();" class="blue btn-flat white-text lighten-2" 
 							type="button" id="btn_locate_me">
 							<i class="material-icons left">my_location</i>
 							Locate me
@@ -153,10 +153,10 @@ $submit_text = empty($id)?'Add':'Save';
 </div>
 <script type="text/javascript">
 document.getElementById('place_name').focus();
-<?php if (!preg_match("/^0[.]0+$/",$place['latitude']) && !preg_match("/^0[.]0+$/",$place['longitude'])): ?>
+<?php if (!preg_match("/^0[.]0+$/",$latitude) && !preg_match("/^0[.]0+$/",$longitude)): ?>
 var placeLocation = {
-	latitude: <?php echo json_encode((float)$place['latitude']) ?>,
-	longitude: <?php echo json_encode((float)$place['longitude']) ?>
+	latitude: <?php echo json_encode((float)$latitude) ?>,
+	longitude: <?php echo json_encode((float)$longitude) ?> 
 };
 <?php else: ?>
 var placeLocation = false;

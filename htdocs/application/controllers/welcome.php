@@ -1,32 +1,29 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if ( ! defined( 'BASEPATH' ) ) exit( 'No direct script access allowed' );
 
 class Welcome extends CI_Controller {
-	
+
 	private $user;
 
-	public function __construct()
-	{
+	public function __construct() {
 		parent::__construct();
 		// Check session
 		$this->user = false;
-		$user = $this->session->userdata('user_id');
-		if(!empty($user))
-		{
+		$user = $this->session->userdata( 'user_id' );
+		if( !empty( $user ) ) {
 			$this->user = array(
-				'id'   => $this->session->userdata('user_id'),
-				'name' => $this->session->userdata('user_name'),
-			);
+			                  'id'   => $this->session->userdata( 'user_id' ),
+			                  'name' => $this->session->userdata( 'user_name' ),
+			              );
 		}
 	}
 
-	public function index()
-	{
+	public function index() {
 		// load tags
-		$this->load->model('Tag', 'tags_db');
+		$this->load->model( 'Tag', 'tags_db' );
 		$tags = $this->tags_db->getAll();
 		// load places
-		$this->load->model('Place', 'places_db');
-		$places = $this->places_db->getPopular(5);
+		$this->load->model( 'Place', 'places_db' );
+		$places = $this->places_db->getPopular( 5 );
 		// data for content view
 		$content = array();
 		$content['tags'] = $tags;
@@ -35,13 +32,13 @@ class Welcome extends CI_Controller {
 		$data = array();
 		$data['page_title'] = "Welcome!";
 		$data['user'] = $this->user;
-		$data['page_content'] = $this->load->view('welcome-material',$content,true);
+		$data['page_content'] = $this->load->view( 'welcome-material',$content,true );
 		//
-		$this->load->view('common/main-material', $data);
+		$this->load->view( 'common/main-material', $data );
 	}
-	
+
 	public function env_info() {
-		if(!empty($this->user)) {
+		if( !empty( $this->user ) ) {
 			phpinfo();
 			die();
 		} else {
@@ -59,7 +56,7 @@ class Welcome extends CI_Controller {
 			$server['REQUEST_URI'] = $_SERVER['REQUEST_URI'];
 			$server['SCRIPT_NAME'] = $_SERVER['SCRIPT_NAME'];
 			$server['REQUEST_TIME'] = $_SERVER['REQUEST_TIME'];
-			print_r($server);
+			print_r( $server );
 			echo "</pre>";
 		}
 	}

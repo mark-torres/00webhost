@@ -88,23 +88,9 @@ class Place extends CI_Model {
 			$place['tags'] = preg_replace("/[\{\}\s]+/","",$place['tags']);
 			if(!empty($place['tags']))
 			{
-				$tags = array();
-				$this->db->select('id, name, display_name');
-				$this->db->where_in("id", explode(",", $place['tags']));
-				$this->db->order_by('name');
-				$query = $this->db->get('tags');
-				if ($query->num_rows() > 0)
-				{
-					$place_tags = $query->result_array();
-					foreach($place_tags as $tag)
-					{
-						$tags[$tag['id']] = array(
-							'name' => $tag['name'],
-							'display_name' => $tag['display_name'],
-						);
-					}
-				}
-				$place['tags'] = $tags;
+				$this->load->model( 'Tag', 'tags_db' );
+				$tag_ids = explode(",", $place['tags']);
+				$place['tags'] = $this->tags_db->getTagsById($tag_ids);
 			}
 			else
 			{
@@ -132,51 +118,11 @@ class Place extends CI_Model {
 			$place['likes'] = $likes;
 			$place['dislikes'] = $dislikes;
 			// get photos
-			$photos = array();
-			$query = $this->db->get_where('photos', array('place_id'=>$place_id));
-			if ($query->num_rows() > 0)
-			{
-				$rows = $query->result_array();
-				foreach($rows as $row)
-				{
-					$pw = PHOTO_WIDTH;
-					$ph = PHOTO_HEIGHT;
-					$tw = PHOTO_THUMB_WIDTH;
-					$th = PHOTO_THUMB_HEIGHT;
-					list($name, $ext) = explode(".", $row['filename']);
-					$thumb_name = "{$name}_thumb.{$ext}";
-					$photo_dir = BASEPATH."../img/photos";
-					// photo
-					$photo_file = "$photo_dir/$place_id/{$row['filename']}";
-					if(is_readable($photo_file))
-					{
-						$photo_src = site_url("/img/photos/$place_id/{$row['filename']}");
-					}
-					else
-					{
-						$photo_src = "http://placehold.it/{$pw}x{$ph}/4D99E0/ffffff.png&text={$pw}x{$ph}";
-					}
-					// thumbnail
-					$photo_thumb = "$photo_dir/$place_id/$thumb_name";
-					if(is_readable($photo_thumb))
-					{
-						$thumb_src = site_url("/img/photos/$place_id/$thumb_name");
-					}
-					else
-					{
-						$thumb_src = "http://placehold.it/{$pw}x{$ph}/4D99E0/ffffff.png&text={$pw}x{$ph}";
-					}
-					//
-					$photos[$row['id']] = array(
-						'thumb'  => $thumb_src,
-						'src'    => $photo_src,
-						'width'  => $pw,
-						'height' => $ph,
-						'descr'  => $row['description'],
-					);
-				}
-			}
-			$place['photos'] = $photos;
+			$this->load->model( 'Photo', 'photos_db' );
+			$place['photos'] = $this->photos_db->getByPlace($place_id);
+			// get products
+			$this->load->model( 'Product', 'products_db' );
+			$place['products'] = $this->products_db->getByPlace($place_id);
 		}
 		return $place;
 	} // - - end of getPlaceTags - - - - -
