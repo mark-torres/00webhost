@@ -22,7 +22,7 @@
 </head>
 <body>
 	<!-- LOGIN MODAL -->
-	<div id="modal-login" class="modal modal-fixed-footer">
+	<div id="modal-login" class="modal">
 		<div id="modal-login-content" class="modal-content">
 		</div>
 		<div id="modal-login-loader" class="progress collapsible">
@@ -34,7 +34,7 @@
 		</div>
 	</div>
 	<!-- ALERT MODAL -->
-	<div id="modal-alert" class="modal modal-fixed-footer">
+	<div id="modal-alert" class="modal">
 		<div class="modal-content">
 			<p id="modal-alert-text">
 				A bunch of text
