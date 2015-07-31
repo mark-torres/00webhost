@@ -62,6 +62,12 @@ switch($web_host)
 		$db_user = "a6718338_usr1";
 		$db_name = "a6718338_db1";
 		break;
+	case 'myplaces.info.urstaging.com':
+		$db_host = "localhost";
+		$db_name = "myplaces";
+		$db_user = "myplaces";
+		$db_pass = "QRuAMdpn0QB54qDlBDA0";
+		break;
 }
 
 $db['default']['hostname'] = $db_host;
