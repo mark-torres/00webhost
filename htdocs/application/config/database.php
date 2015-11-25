@@ -64,6 +64,7 @@ switch($web_host)
 		break;
 	case 'myplaces.info.urstaging.com':
 		$db_host = "localhost";
+		$db_host = "173.194.233.175"; # GCloud SQL
 		$db_name = "myplaces";
 		$db_user = "myplaces";
 		$db_pass = "QRuAMdpn0QB54qDlBDA0";
