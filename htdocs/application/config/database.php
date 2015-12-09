@@ -50,7 +50,7 @@ $active_record = TRUE;
 
 $db_user = "johnny";
 $db_pass = "9zFH22ZU684n2x6T";
-$db_name = "sandbox1";
+$db_name = "myplaces";
 $db_host = "localhost";
 
 $web_host = $_SERVER['HTTP_HOST'];
