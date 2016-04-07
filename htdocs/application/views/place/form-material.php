@@ -39,10 +39,11 @@ $submit_text = empty($id)?'Add':'Save';
 						<label for="place_name">
 							Name *
 						</label>
-						<input type="text" name="place[name]" value="<?php echo $name ?>" id="place_name">
+						<input type="text" name="place[name]" value="<?php echo htmlentities($name) ?>" id="place_name">
 					</div>
 					<div class="input-field col s12">
-						<textarea class="materialize-textarea" name="place[info]" id="place_info"><?php echo $info ?></textarea>
+						<textarea class="materialize-textarea" name="place[info]" 
+							id="place_info"><?php echo htmlentities($info) ?></textarea>
 						<label for="place_info">
 							Info
 						</label>
@@ -51,7 +52,8 @@ $submit_text = empty($id)?'Add':'Save';
 						<label for="place_info">
 							Address
 						</label>
-						<textarea class="materialize-textarea" name="place[address]" id="place_address"><?php echo $address ?></textarea>
+						<textarea class="materialize-textarea" name="place[address]" 
+							id="place_address"><?php echo htmlentities($address) ?></textarea>
 					</div>
 					<fieldset class="input-field">
 						<legend class="grey-text">Location</legend>
