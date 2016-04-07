@@ -39,11 +39,11 @@ $submit_text = empty($id)?'Add':'Save';
 						<label for="place_name">
 							Name *
 						</label>
-						<input type="text" name="place[name]" value="<?php echo htmlentities($name) ?>" id="place_name">
+						<input type="text" name="place[name]" value="<?php echo htmlspecialchars($name) ?>" id="place_name">
 					</div>
 					<div class="input-field col s12">
 						<textarea class="materialize-textarea" name="place[info]" 
-							id="place_info"><?php echo htmlentities($info) ?></textarea>
+							id="place_info"><?php echo htmlspecialchars($info) ?></textarea>
 						<label for="place_info">
 							Info
 						</label>
@@ -53,7 +53,7 @@ $submit_text = empty($id)?'Add':'Save';
 							Address
 						</label>
 						<textarea class="materialize-textarea" name="place[address]" 
-							id="place_address"><?php echo htmlentities($address) ?></textarea>
+							id="place_address"><?php echo htmlspecialchars($address) ?></textarea>
 					</div>
 					<fieldset class="input-field">
 						<legend class="grey-text">Location</legend>
@@ -100,7 +100,7 @@ $submit_text = empty($id)?'Add':'Save';
 								<input <?php echo array_key_exists($tag['id'], $tags)?'checked':'' ?> 
 									name="place[tags][<?php echo $tag['id'] ?>]" type="checkbox" 
 									id="<?php echo "tag_{$tag['id']}" ?>" />
-								<label title="<?php echo htmlentities($tag['display_name']) ?>" for="<?php echo "tag_{$tag['id']}" ?>">
+								<label title="<?php echo htmlspecialchars($tag['display_name']) ?>" for="<?php echo "tag_{$tag['id']}" ?>">
 									<?php echo $tag['display_name'] ?>
 								</label>
 							</p>
